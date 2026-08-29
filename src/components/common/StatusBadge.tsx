@@ -3,6 +3,7 @@ import type { RiskLevel, WaterStatus } from "@/data/mockData";
 
 const statusStyles: Record<WaterStatus, string> = {
   SAFE: "bg-success/12 text-success border-success/25",
+  NORMAL: "bg-info/12 text-info border-info/25",
   MODERATE: "bg-warning/15 text-warning-foreground border-warning/35",
   UNSAFE: "bg-destructive/12 text-destructive border-destructive/25",
 };
@@ -20,6 +21,7 @@ const dot: Record<string, string> = {
   MEDIUM: "bg-warning",
   UNSAFE: "bg-destructive",
   HIGH: "bg-destructive",
+  NORMAL: "bg-info",
 };
 
 export function StatusBadge({
@@ -30,9 +32,7 @@ export function StatusBadge({
   className?: string;
 }) {
   const styles =
-    status in statusStyles
-      ? statusStyles[status as WaterStatus]
-      : riskStyles[status as RiskLevel];
+    status in statusStyles ? statusStyles[status as WaterStatus] : riskStyles[status as RiskLevel];
   return (
     <span
       className={cn(

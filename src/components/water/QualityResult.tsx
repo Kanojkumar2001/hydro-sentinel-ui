@@ -14,9 +14,20 @@ export function RiskIndicator({
   risk: RiskLevel;
   confidence: number;
 }) {
-  const Icon = status === "SAFE" ? CheckCircle2 : status === "MODERATE" ? AlertCircle : XCircle;
+  const Icon =
+    status === "SAFE"
+      ? CheckCircle2
+      : status === "NORMAL" || status === "MODERATE"
+        ? AlertCircle
+        : XCircle;
   const tone =
-    status === "SAFE" ? "text-success" : status === "MODERATE" ? "text-warning" : "text-destructive";
+    status === "SAFE"
+      ? "text-success"
+      : status === "NORMAL"
+        ? "text-info"
+        : status === "MODERATE"
+          ? "text-warning"
+          : "text-destructive";
 
   return (
     <div className="flex flex-col items-center gap-3 rounded-2xl border border-border bg-card px-6 py-8 text-center">
@@ -54,7 +65,9 @@ export function ParameterSummary({ prediction }: { prediction: NumericalPredicti
             <div className="flex items-center gap-3">
               <span className="text-lg font-semibold tabular-nums">
                 {p.value}
-                {p.unit ? <span className="ml-1 text-xs text-muted-foreground">{p.unit}</span> : null}
+                {p.unit ? (
+                  <span className="ml-1 text-xs text-muted-foreground">{p.unit}</span>
+                ) : null}
               </span>
               {p.ok ? (
                 <CheckCircle2 className="size-5 text-success" />
@@ -90,7 +103,10 @@ export function ExplanationChart({
               <span className="text-muted-foreground">{item.level}</span>
             </div>
             <div className="h-2.5 overflow-hidden rounded-full bg-muted">
-              <div className="h-full rounded-full bg-hero" style={{ width: `${item.weight * 100}%` }} />
+              <div
+                className="h-full rounded-full bg-hero"
+                style={{ width: `${item.weight * 100}%` }}
+              />
             </div>
           </div>
         ))}

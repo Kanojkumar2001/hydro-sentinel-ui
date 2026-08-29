@@ -13,6 +13,7 @@ function greeting() {
 
 export function Header({ title, subtitle }: { title?: string; subtitle?: string }) {
   const [open, setOpen] = useState(false);
+  const [notificationsOpen, setNotificationsOpen] = useState(false);
 
   return (
     <header className="sticky top-0 z-30 flex items-center gap-3 border-b border-border bg-background/85 px-4 py-3 backdrop-blur lg:px-8 lg:py-5">
@@ -43,10 +44,32 @@ export function Header({ title, subtitle }: { title?: string; subtitle?: string 
       </div>
 
       <div className="ml-auto flex items-center gap-2">
-        <Button variant="ghost" size="icon" aria-label="Notifications" className="relative">
+        <div className="relative">
+          <Button
+            variant="ghost"
+            size="icon"
+            aria-label="Notifications"
+            className="relative"
+            onClick={() => setNotificationsOpen((value) => !value)}
+          >
           <Bell className="size-5" />
           <span className="absolute right-2 top-2 size-2 rounded-full bg-destructive" />
-        </Button>
+          </Button>
+          {notificationsOpen ? (
+            <div className="absolute right-0 top-12 z-50 w-72 rounded-xl border border-border bg-card p-4 shadow-elevated">
+              <div className="flex items-center justify-between">
+                <p className="text-sm font-semibold">Notifications</p>
+                <span className="rounded-full bg-destructive/10 px-2 py-1 text-[10px] font-semibold text-destructive">1 new</span>
+              </div>
+              <div className="mt-3 rounded-lg bg-warning/10 p-3 text-xs leading-5 text-warning-foreground">
+                <strong>High-risk sample detected.</strong> Review WS002 from Pond-Sample in analysis history.
+              </div>
+              <a href="/history" onClick={() => setNotificationsOpen(false)} className="mt-3 inline-flex text-xs font-semibold text-primary hover:underline">
+                Open history
+              </a>
+            </div>
+          ) : null}
+        </div>
         <div className="flex items-center gap-2 rounded-full border border-border bg-card py-1 pl-1 pr-3">
           <span className="flex size-7 items-center justify-center rounded-full bg-hero text-xs font-semibold text-primary-foreground">
             K
